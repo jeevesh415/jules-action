@@ -1,0 +1,27 @@
+name: Unused code remover
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Every Monday at 3 AM
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: google-labs-code/jules-invoke@v1
+        with:
+          prompt: |
+            Delete code that is completely unused.
+
+            You have to make absolutely sure this is safe, and it's completely fine if you don't make any changes.
+
+            Here's some ideas for how to approach this:
+
+            * When possible, run and install a linter that will help find unused code.
+            * Use `grep` and other search tools to ensure the code isn't used.
+
+            Constraints:
+            - Don't change public API contracts
+            - All existing tests must pass
+
+          jules_api_key: ${{ secrets.JULES_API_KEY }}
+
